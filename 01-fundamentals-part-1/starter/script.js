@@ -37,7 +37,7 @@ use let only when you need to change the value*/
 
 console.log("=== DATA TYPES ===");
 
-//NUMBER
+//NUMBER 
 age =24;
 console.log(age);
 console.log(typeof age);
@@ -65,9 +65,6 @@ console.log(dynamicVariable, typeof dynamicVariable);
 dynamicVariable = "Now I'm a string";
 console.log(dynamicVariable, typeof dynamicVariable);
 
-//changed into a boolean
+//CHANGED INTO STRING
 dynamicVariable = true;
 console.log(dynamicVariable, typeof dynamicVariable);
-
-
-
