@@ -14,7 +14,7 @@ age = 31; // we can change Let variables
 console.log(age);
 
 const birthYear = 1991; 
-//birthYear = 2004; //WRONG ! const canot change value
+//birthYear = 2004; //const canot change value
 console.log(birthYear);
 
 const PI = 3.1415;
@@ -29,11 +29,7 @@ age = 51;
 
 let lastName = "Doe";
 
-//do not dp this
-
-/*best practices: 
-use const by default
-use let only when you need to change the value*/
+//do not do this
 
 console.log("=== DATA TYPES ===");
 
