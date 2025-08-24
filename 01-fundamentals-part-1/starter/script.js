@@ -241,23 +241,172 @@
 
 //Coding Challenge #2
 // Test Data 1
-let massMark = 78;
-let heightMark = 1.69;
-let massJohn = 92;
-let heightJohn = 1.95;
+// let massMark = 78;
+// let heightMark = 1.69;
+// let massJohn = 92;
+// let heightJohn = 1.95;
 
-//calculte BMIs
-let markBMI = massMark / (heightMark ** 2);
-let johnBMI = massJohn / (heightJohn ** 2);
+// //calculte BMIs
+// let markBMI = massMark / (heightMark ** 2);
+// let johnBMI = massJohn / (heightJohn ** 2);
 
-//create markHigherBMI variable
+// //create markHigherBMI variable
 
-if(markBMI > johnBMI){
-  console.log(`Mark’s BMI (${markBMI}) is higher than John’s (${johnBMI})`)
-}
-else{
-  console.log(`John’s BMI (${johnBMI}) is higher than Mark’s (${markBMI})`)
-}
+// if(markBMI > johnBMI){
+//   console.log(`Mark’s BMI (${markBMI}) is higher than John’s (${johnBMI})`)
+// }
+// else{
+//   console.log(`John’s BMI (${johnBMI}) is higher than Mark’s (${markBMI})`)
+// }
+
+// Type Conversion and Coercion
+//manual type conversion
+// const inputYear = '1991';
+// console.log(Number(inputYear), inputYear);
+// console.log(Number(inputYear) + 18);
+
+// console.log(Number("Jonas"));
+// console.log(typeof NaN);
+
+// console.log(String(23), 23);
+// console.log(typeof String(23));
+
+// //automatic type coercion
+// console.log('I am ' + 20 + ' years old');
+// console.log('23' - '10' - 3);
+// console.log('23' / '2');
+// console.log('23' * '2');
+
+// let n = '1' + 1;
+// console.log(n);
+
+// n = n -1;
+// console.log(n);
+
+// type conversion = explicit/manual (recommended)
+// type coercion = implicit/automatic
+
+// Equality - Strict
+// const age = '18';
+// if (age === 18) console.log('You just became an adult (strict)');
+// if (age == 18) console.log('You just became an adult (loose)');
+
+// console.log('18' === 18);
+// console.log('18' == 18); //coercion happens
+// console.log(18 === 18);
+
+//== checks only the values
+//=== checks the value and the type
+
+//why == can be dangerous
+// console.log('0' == 0);
+// console.log(0 == false);
+// console.log('0' == false);
+// console.log(null == undefined); //special case
+
+// console.log('' == 0);
+// console.log('    ' == 0);
+
+// //best practice
+// const favourite = prompt("What's your favourite number?");
+// console.log(favourite);
+// console.log(typeof favourite);
+
+// if (favourite === 23){
+//   console.log("Coll! 23 is an amazing number");
+// }
+// else if (favourite == 23){
+// console.log("23 is also a cool number");
+// }
+// else if (favourite === 9){
+// console.log("9 is also a cool number");
+// }
+// else{
+//   console.log('Number is not 23 or 7 or 9');
+// }
+
+// if(favourite !== 23) console.log('Why not 23?');
+
+//Logical operators
+
+// const hasDriverLicense = true;
+// const hasGoodVision = true;
+
+// console.log(`AND OPERATOR: ${hasDriverLicense && hasGoodVision}`);
+// console.log(`OR OPERATOR: ${hasDriverLicense || hasGoodVision}`);
+// console.log(`NOT OPERATOR: ${!hasDriverLicense}`);
+
+// const isTired = false;
+// console.log(hasDriverLicense && hasGoodVision && !isTired);
+
+// if (hasDriverLicense && hasGoodVision && !isTired) {
+//   console.log(`Aiken is able to drive`);
+// } else{
+//   console.log(`Someone else should drive`);
+// }
+
+// //more complex scenarios
+// const age = 20;
+// const hasPermission = true;
+// const hasExperience = false;
+
+// if ((age >= 18 || hasPermission) && hasExperience) {
+//   console.log("Approved to drive");
+// } else {
+//   console.log("Not approved to drive");
+// }
+
+// Create a club entry system with these rules:
+// Entry allowed if: (age >= 21 AND hasID) OR isVIP
+
+// const age = 19; // Try different values
+// const hasID = true; // Try different values
+// const isVIP = false; // Try different values
+
+// // Your logic here:
+// if ((age >= 21 && hasID) || isVIP) {
+//   console.log('Welcome to the club!');
+// } else {
+//   console.log('Sorry, you cannot enter');
+// }
+
+
+// //The Conditional (Ternary) Operator
+
+// const age = 23;
+
+// //basic ternary:  condition ? valueiftrue : valueiffalse
+
+// const drink = age >= 18 ? `wine` : `water`;
+// console.log(drink);
+
+// //if else statement
+// let drink2;
+// if (age >= 18) {
+//   drink2 = `wine`;
+// }else{
+//   drink2 = `water`;
+// }
+// console.log(drink2);
+
+
+// console.log(`I like to drink ${age >= 18 ? `wine` : `water`}`);
+
+//Final Challenge: Tip Caalculator
+
+// Coding Challenge #4
+
+const bill = 430;// Test with 275, 40, and 430
+
+const tip = bill >= 50 && bill <= 300 ? bill * 0.15 : bill * 0.20;
+
+console.log(`The bill was ${bill}, the tip was ${tip}, and the total value ${bill + tip}`);
+
+// Expected outputs:
+// Bill 275: "The bill was 275, the tip was 41.25, and the total value 316.25"
+// Bill 40:  "The bill was 40, the tip was 8, and the total value 48"
+// Bill 430: "The bill was 430, the tip was 86, and the total value 516"
+
 
 
 
