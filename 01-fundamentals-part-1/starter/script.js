@@ -154,6 +154,92 @@
 
 // Coding Challenge #1 - BMI Calculator
 
+// // Test Data 1
+// let massMark = 78;
+// let heightMark = 1.69;
+// let massJohn = 92;
+// let heightJohn = 1.95;
+
+// //calculte BMIs
+// let markBMI = massMark / (heightMark ** 2);
+// let johnBMI = massJohn / (heightJohn ** 2);
+
+// //create markHigherBMI variable
+
+// let markHigher = (markBMI > johnBMI);
+// console.log("BMI of Mark: ", markBMI);
+// console.log("BMI of John: ", johnBMI);
+// console.log("Is the BMI of Mark higher than John? " + markHigher);
+
+// //Test Daata 2
+// massMark = 95;
+// heightMark = 1.88;
+// massJohn = 85;
+// heightJohn = 1.76;
+
+// //calculte BMIs
+// markBMI = massMark / (heightMark ** 2);
+// johnBMI = massJohn / (heightJohn ** 2);
+
+// //create markHigherBMI variable
+
+// markHigher = (markBMI > johnBMI);
+// console.log("BMI of Mark: ", markBMI);
+// console.log("BMI of John: ", johnBMI);
+// console.log("Is the BMI of Mark higher than John? " + markHigher);
+
+// old way: string concatenation
+// const firstName = "Jonas";
+// const job = "teacher";
+// const birthYear = 1991;
+// const year = 2037;
+
+// const jonas =
+//   "I'm " + firstName + ", a " + (year - birthYear) + " year old " + job + "!";
+// console.log(jonas);
+
+// //the modern way - ES6 Template Literals
+
+// const jonasNew = `I'm ${firstName}, a ${year - birthYear} year old ${job}!`;
+// console.log(jonasNew);
+
+// console.log(`I'm ${2037 - 1991} years old`);
+// console.log(`Math works: ${2 + 3} equal five`);
+// console.log(`Comparisons too: ${5 > 3}`);
+// //alsi use for any string
+// console.log(`Just a regular string....`);
+
+// //multiline strings
+// console.log(
+//   "String with \n\
+// multiple \n\
+// lines"
+// );
+
+// // new way natural
+// console.log(`String
+// multiple
+// lines`);
+
+// //if else statement
+// const age = 15;
+// if (age >= 18 ) {
+//   console.log(`Sarah can start a driving license`);
+// }
+// else{
+//   const yearsLeft = 18 - age;
+//   console.log(`Sarah is too young. Wait another ${yearsLeft} years`);
+// }
+
+// //Truthy & Falsy Values
+// console.log(Boolean(0));//falsy values
+// console.log(Boolean(undefined));//falsy values
+// console.log(Boolean("Jonas"));//truthy values
+// console.log(Boolean({}));//truthy values
+// console.log(Boolean(""));//falsy values
+
+
+//Coding Challenge #2
 // Test Data 1
 let massMark = 78;
 let heightMark = 1.69;
@@ -166,26 +252,12 @@ let johnBMI = massJohn / (heightJohn ** 2);
 
 //create markHigherBMI variable
 
-let markHigher = (markBMI > johnBMI);
-console.log("BMI of Mark: ", markBMI);
-console.log("BMI of John: ", johnBMI);
-console.log("Is the BMI of Mark higher than John? " + markHigher);
+if(markBMI > johnBMI){
+  console.log(`Mark’s BMI (${markBMI}) is higher than John’s (${johnBMI})`)
+}
+else{
+  console.log(`John’s BMI (${johnBMI}) is higher than Mark’s (${markBMI})`)
+}
 
-//Test Daata 2
-massMark = 95;
-heightMark = 1.88;
-massJohn = 85;
-heightJohn = 1.76;
-
-//calculte BMIs
-markBMI = massMark / (heightMark ** 2);
-johnBMI = massJohn / (heightJohn ** 2);
-
-//create markHigherBMI variable
-
-markHigher = (markBMI > johnBMI);
-console.log("BMI of Mark: ", markBMI);
-console.log("BMI of John: ", johnBMI);
-console.log("Is the BMI of Mark higher than John? " + markHigher);
 
 
