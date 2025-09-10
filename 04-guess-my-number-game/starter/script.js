@@ -41,55 +41,73 @@ document.querySelector('.check').addEventListener('click', function () {
   const guess = Number(document.querySelector('.guess').value);
   console.log('Player guessed: ', guess);
 
+  //check input if our guess input value is empty
+  if (!guess) {
+    messageEl.textContent = 'Please input a number!';
+    return;
+  }
+  if (guess < 1 || guess > 20) {
+    messageEl.textContent = 'The number must be between 1 and 20!!!';
+    return;
+  }
+
   if (guess === secretNumber) {
     console.log('Your guess is correct!');
     // messageEl.textContent = 'Your guess is correct!';
     numberEl.textContent = secretNumber;
-    if (score > highscore){
-        highscore = score;
-        highscoreEl.textContent = highscore;
+    if (score > highscore) {
+      highscore = score;
+      highscoreEl.textContent = highscore;
     }
-    messageEl.textContent = "You have won!"
+    messageEl.textContent = 'You have won!';
+    numberEl.textContent = secretNumber;
     guessEl.disabled = true;
     checkEl.disabled = true;
-    
+    document.body.style.backgroundColor = 'green';
   } else if (guess > secretNumber) {
     console.log('Too high!');
     messageEl.textContent = 'Too high!';
     score--;
     scoreEl.textContent = score;
-    if(score < 1){
-        messageEl.textContent = "You have lost, press again!";
-        guessEl.disabled = true;
-        checkEl.disabled = true;
+    if (score < 1) {
+      messageEl.textContent = 'You have lost, press again!';
+      numberEl.textContent = secretNumber;
+      guessEl.disabled = true;
+      checkEl.disabled = true;
+      document.body.style.backgroundColor = 'red';
+      messageEl.textContent = 'Game Over!!';
+      guessEl.value = ' ';
     }
   } else if (guess < secretNumber) {
     console.log('Too low!');
     messageEl.textContent = 'Too low!';
     score--;
     scoreEl.textContent = score;
-    if(score < 1){
-        messageEl.textContent = "You have lost, press again!";
-        guessEl.disabled = true;
-        checkEl.disabled = true;
+    if (score < 1) {
+      messageEl.textContent = 'You have lost, press again!';
+      numberEl.textContent = secretNumber;
+      guessEl.disabled = true;
+      checkEl.disabled = true;
+      document.body.style.backgroundColor = 'red';
+      messageEl.textContent = 'Game Over!!';
+      guessEl.value = ' ';
     }
   }
 });
 
 againBtn.addEventListener('click', function () {
-    score = 20;
-    secretNumber = Math.trunc(Math.random()*20) + 1;
-
-    //restart message display
-    messageEl = 'Start guessing';
-    //restart question mark
-    numberEl.querySelector.textContent = "?";
-    //restart score
-    scoreEl.textContent = score;
-    //restart guess input value
-    guessEl.value = "";
-    guessEl.disabled = false;
-    checkEl.disabled = false;
-
+  score = 20;
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  console.log('New secret number: ', secretNumber);
+  //restart message display
+  messageEl.textContent = 'Start guessing';
+  //restart question mark
+  numberEl.textContent = '?';
+  //restart score
+  scoreEl.textContent = score;
+  //restart guess input value
+  guessEl.value = ' ';
+  guessEl.disabled = false;
+  checkEl.disabled = false;
+  document.body.style.backgroundColor = '#222';
 });
-
