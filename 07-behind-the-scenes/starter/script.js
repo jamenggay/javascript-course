@@ -3,6 +3,7 @@
 console.log('=== BEHIND THE SCENES: SCOPING & HOISTING ===');
 
 
+
 // global execution context
 console.log('Starting program');
 
@@ -42,6 +43,7 @@ if (true) {
 console.log(varX); 
 // console.log(letX); 
 // console.log(constX); 
+
 var varX = 1;
 let letX = 2;
 const constX = 3;
@@ -52,7 +54,8 @@ function addDecl(a, b) {
     return a + b;
 }
 
-console.log(addDecl(7, 8)); 
+console.log(addDecl(7, 8)); // like this too
+
 
 // console.log(addExpr(7, 8)); 
 
@@ -64,7 +67,9 @@ const addArrow = (a, b) => a + b;
 
 const apiUrl = 'https://example.com';
 console.log(apiUrl); 
+// behind the scenes development hour 2 - this keyword & arrow functions
 
+console.log('=== BEHIND THE SCENES: THIS KEYWORD & ARROW FUNCTIONS ===');
 
 const person = {
     name: 'Hyewon',
@@ -127,6 +132,7 @@ timer.start();
 timer.startModern();
 
 
+// arguments keywords & advanced scenarios
 const functionTypes = {
     regularFunction: function() {
         console.log('Arguments length:', arguments.length);
@@ -147,3 +153,60 @@ const functionTypes = {
 functionTypes.regularFunction('hello', 'world');
 functionTypes.arrowFunction('test'); 
 functionTypes.modernFunction('modern', 'approach');
+
+
+console.log('=== BEHIND THE SCENES: PRIMITIVES VS OBJECTS, COPYING & STRICT MODE ===');
+
+// how primitive types work
+
+let age = 20;
+let oldAge = age; 
+age = 21;
+console.log('age', age);
+console.log('oldAge', oldAge);
+
+// objects in heap
+const me = {name: 'Aisle', age: 20,};
+const friend = me; 
+
+friend.name = 'Chaye';
+friend.age = 20;
+
+console.log('me:', me);
+console.log('friend:', friend);
+
+// shallow copy vs deep copy 
+const original = {
+    name: 'Minho',
+    age: 33,
+    hobbies: ['running', 'singing'],
+};
+
+// spread operator shallow copy
+const shallowCopy = { ...original };
+shallowCopy.name = 'Seungyeon';
+
+console.log('original name:', original.name);
+console.log('copy name:', shallowCopy.name);
+
+shallowCopy.hobbies.push('walking'); 
+console.log(original.hobbies);
+console.log(shallowCopy.hobbies);
+
+
+// deep copy
+const deepOriginal = {
+    name: 'Maraiah',
+    age: 24,
+    address: { city: 'Cebu', country: 'Philippines'},
+    hobbies: ['traveling', 'running'],
+};
+
+// modern deep copy with structuredClone
+const deepCopy = structuredClone(deepOriginal);
+deepCopy.address.city = 'Taguig';
+deepCopy.hobbies.push('cooking');
+deepCopy.name = 'Queen';
+
+console.log(deepOriginal);
+console.log(deepCopy);
