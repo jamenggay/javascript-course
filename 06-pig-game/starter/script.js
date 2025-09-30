@@ -1,7 +1,7 @@
-// pig game development hour 1 - foundation & dice rolling
 'use strict';
 
 console.log('=== PIG GAME DEVELOPMENT: FOUNDATION & DICE ROLLING ===');
+
 
 
 console.log('Pig Game project ready!');
@@ -27,6 +27,7 @@ const current0El = document.getElementById('current--0');
 const current1El = document.getElementById('current--1');
 const diceEl = document.querySelector('.dice');
 const btnRoll = document.querySelector('.btn--roll');
+const btnHold = document.querySelector('.btn--hold');
 
 // game initialization function
 const init = function () {
@@ -48,7 +49,6 @@ init();
 
 btnRoll.addEventListener('click', function () {
     if (playing) {
-        // dice logic
         const dice = Math.trunc(Math.random() * 6) + 1;
         diceEl.classList.remove('hidden');
         diceEl.src = `dice-${dice}.png`;
@@ -57,8 +57,27 @@ btnRoll.addEventListener('click', function () {
             currentScore += dice;
             document.getElementById(`current--${activePlayer}`).textContent = currentScore;
         } else {
-            currentScore = 0;
-            document.getElementById(`current--${activePlayer}`).textContent = 0;
+            switchPlayer();
         }
+    }
+});
+
+const switchPlayer = function () {
+    document.getElementById(`current--${activePlayer}`).textContent = 0;
+    currentScore = 0;
+
+    activePlayer = activePlayer === 0 ? 1 : 0;
+
+    player0El.classList.toggle('player--active');
+    player1El.classList.toggle('player--active');
+};
+
+btnHold.addEventListener('click', function () {
+    if (playing && currentScore > 0) {
+        scores[activePlayer] += currentScore;
+
+        document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
+
+        switchPlayer();
     }
 });
