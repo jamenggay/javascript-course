@@ -35,7 +35,7 @@ class Workout {
     ];
 
     //generate description
-    this.description = `${(this.type[0].toUpperCase())}${this.type.slice(1)} 
+    this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} 
     on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
   }
 
@@ -44,39 +44,39 @@ class Workout {
   }
 }
 
-const testWorkout = new Workout([40.7128, -74.005,], 5.2, 24);
+const testWorkout = new Workout([40.7128, -74.005], 5.2, 24);
 console.log('Test workout: ', testWorkout);
 
 class Running extends Workout {
-    type = 'running';
+  type = 'running';
 
-    constructor(coords, distance, duration, cadence){
-        super(coords, distance, duration);
-        this.cadence = cadence;
-        this.calcPace();
-        this._setDescription();
-    }
+  constructor(coords, distance, duration, cadence) {
+    super(coords, distance, duration);
+    this.cadence = cadence;
+    this.calcPace();
+    this._setDescription();
+  }
 
-    calcPace() {
-        this.pace = this.duration / this.distance;
-        return this.pace;
-    }
+  calcPace() {
+    this.pace = this.duration / this.distance;
+    return this.pace;
+  }
 }
 
 class Cycling extends Workout {
-    type = 'cycling';
+  type = 'cycling';
 
-    constructor(coords, distance, duration, elevationGain){
-        super(coords, distance, duration);
-        this.elevationGain = elevationGain;
-        this.calcSpeed();
-        this._setDescription();
-    }
+  constructor(coords, distance, duration, elevationGain) {
+    super(coords, distance, duration);
+    this.elevationGain = elevationGain;
+    this.calcSpeed();
+    this._setDescription();
+  }
 
-    calcSpeed() {
-        this.speed = this.distance / (this.duration / 60);
-        return this.speed;
-    }
+  calcSpeed() {
+    this.speed = this.distance / (this.duration / 60);
+    return this.speed;
+  }
 }
 
 // ===== TESTING THE CLASS HIERARCHY =====
@@ -105,4 +105,96 @@ console.log(
   run1 instanceof Workout,
   cycling1 instanceof Workout
 );
- 
+
+console.log('=== TESTING GEOLOCATION API ===');
+
+// Test the geolocation
+
+// loadMap();
+
+class App {
+  #map;
+  #mapZoomLevel = 13;
+  #mapEvent;
+  #workouts = [];
+
+  constructor() {
+    console.log('App starting');
+    this._getPosition();
+  }
+  _getPosition() {
+    if (navigator.geolocation) {
+      console.log('🔍 Requesting user location...');
+      navigator.geolocation.getCurrentPosition(
+        this._loadMap.bind(this),
+        this._handleLocationError.bind(this),
+        {
+          timeout: 10000,
+          enableHighAccuracy: true,
+          maximumAge: 600000,
+        }
+      );
+    } else {
+      alert('❌ Geolocation is not supported by this browser');
+    }
+  }
+  _handleLocationError(error) {
+    console.error('Geolocation error:', error);
+
+    let message = 'Could not get your position. ';
+
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        message +=
+          'Location access was denied. Please enable location services and refresh the page.';
+        break;
+      case error.POSITION_UNAVAILABLE:
+        message += 'Location information is unavailable.';
+        break;
+      case error.TIMEOUT:
+        message += 'Location request timed out.';
+        break;
+      default:
+        message += 'An unknown error occurred.';
+        break;
+    }
+
+    alert(`📍 ${message}`);
+  }
+  _loadMap(position) {
+    const { latitude, longitude } = position.coords;
+    console.log(`Loading map at corrdinates: ${latitude}, ${longitude}`);
+
+    //coordinate array
+    //VERY IMPORTANT!!!
+    const coords = [latitude, longitude];
+
+    //initialize map and center at users location
+    this.#map = L.map('map').setView(coords, 13);
+
+    //add open street map
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.#map);
+
+    //add a marker to the user's location
+    L.marker(coords).addTo(this.#map).bindPopup('You are here!').openPopup();
+
+    this.#map.on('click', (mapEvent) => {
+  console.log('Map clicked!', mapEvent);
+  const { lat, lng } = mapEvent.latlng;
+
+  L.marker([lat, lng])
+    .addTo(this.#map)
+    .bindPopup(`Workout location<br>Lat: ${lat.toFixed(4)}, ${lng.toFixed(4)}`)
+    .openPopup();
+});
+
+
+    console.log('Map loaded successfully at user location');
+  }
+}
+
+const app = new App();
+console.log('Hour 2 complete!');
