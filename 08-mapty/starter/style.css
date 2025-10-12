@@ -92,6 +92,7 @@ a:visited {
 
 .workout__details {
   display: flex;
+
   align-items: baseline;
 }
 
@@ -104,6 +105,10 @@ a:visited {
 .workout__value {
   font-size: 1.5rem;
   margin-right: 0.5rem;
+}
+.details-container{
+  display: flex;
+  justify-content: space-between;
 }
 
 .workout__unit {
