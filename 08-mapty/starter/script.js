@@ -142,13 +142,48 @@ class App {
   #workouts = [];
 
   constructor() {
-    // Get user's position
+    console.log('App is starting');
+    this._getLocalStorage();
     this._getPosition();
 
     // Attach event handler to form submission
     form.addEventListener('submit', this._newWorkout.bind(this));
     //attach event handle for workout type change
     inputType.addEventListener('change', this._toggleElevationField);
+
+    //add click handling for workou list items
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
+
+    document.addEventListener('keydown', this._handleKeyDown.bind(this));
+  }
+
+  _handleKeyDown(e){
+    //close form when escape ley is pressed
+    if(e.key === 'Escape' && !form.classList.contains('hidden')){
+      this._hideForm();
+      console.log('Form closed with Esc');
+    }
+  }
+
+  _moveToPopup(e) {
+    //find the closest workout element from clicked target
+    const workoutEl = e.target.closest('.workout');
+
+    if (!workoutEl) return;
+
+    //find the workout object using the data-id attribute
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+
+    //moce the map to the workout coordinate
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+    console.log(`Navigated to ${workout.type} workout at`, workout.coords);
   }
 
   _getPosition() {
@@ -210,6 +245,8 @@ class App {
     // Handling clicks on map
     this.#map.on('click', this._showForm.bind(this));
 
+    this._renderStoredWorkouts();
+
     console.log('🗺️ Default map loaded successfully');
   }
 
@@ -230,7 +267,19 @@ class App {
     // Handling clicks on map
     this.#map.on('click', this._showForm.bind(this));
 
+    this._renderStoredWorkouts();
     console.log('🗺️ Map loaded successfully at user location');
+  }
+
+  _renderStoredWorkouts() {
+    this.#workouts.forEach(workout => {
+      this._renderWorkoutMarker(workout);
+      this._renderWorkout(workout);
+    });
+
+    if (this.#workouts.length > 0) {
+      console.log(`Rendered ${this.#workouts.lenght} stored workouts`);
+    }
   }
 
   _showForm(mapE) {
@@ -306,10 +355,12 @@ class App {
     console.log('workout object created: ', workout);
 
     this.#workouts.push(workout);
-    
+
     this._renderWorkoutMarker(workout);
 
     this._renderWorkout(workout);
+
+    this._setLocalStorage();
 
     this._hideForm();
 
@@ -319,7 +370,7 @@ class App {
   _renderWorkout(workout) {
     //create the base html
     let html = `
-    <li class="workout--${workout.type}" data-id="${workout.id}">
+    <li class="workout workout--${workout.type}" data-id="${workout.id}">
     <h2 class="workout__title">${workout.description}</h2>
     <div class="details-container">
     <div class="workout__details">
@@ -335,7 +386,7 @@ class App {
         <span class="workout__unit">min</span>
       </div>`;
     if (workout.type === 'running')
-    html += `
+      html += `
       <div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.pace.toFixed(1)}</span>
@@ -350,8 +401,8 @@ class App {
     </li>
     `;
 
-  if (workout.type === 'cycling')
-    html += `
+    if (workout.type === 'cycling')
+      html += `
       <div class="workout__details">
         <span class="workout__icon">⚡️</span>
         <span class="workout__value">${workout.speed.toFixed(1)}</span>
@@ -383,6 +434,53 @@ class App {
       )
       .openPopup();
   }
+
+  _setLocalStorage() {
+    localStorage.setItem('workouts', JSON.stringify(this.#workouts));
+    console.log('Workout saved to the local storage');
+  }
+
+  _getLocalStorage() {
+    const data = localStorage.getItem('workouts');
+
+    //check if date exists before passing
+    if (!data) return;
+    //parse the jason data if exists
+    const storedWorkouts = JSON.parse(data);
+    console.log('Retrived workouts from local Storage', storedWorkouts);
+
+    //restore proper workout objects with inheritance
+    this.#workouts = storedWorkouts.map(workoutData => {
+      let workout;
+
+      //recreate running objects with proper inheritance
+      if (workoutData.type === 'running') {
+        workout = new Running(
+          workoutData.coords,
+          workoutData.distance,
+          workoutData.duration,
+          workoutData.cadence
+        );
+      }
+      //recreate cycling objects with proper inheritance
+      if (workoutData.type === 'cycling') {
+        workout = new Cycling(
+          workoutData.coords,
+          workoutData.distance,
+          workoutData.duration,
+          workoutData.elevation
+        );
+      }
+
+      //restore original date and ID to maintain data consistency
+      workout.data = new Date(workoutData.date);
+      workout.id = workoutData.id;
+      workout.clicks = workoutData.click;
+
+      return workout;
+    });
+
+    console.log('Workouts restored as proper objects', this.#workouts);
+  }
 }
 const app = new App();
-console.log('Hour 2 complete!');
